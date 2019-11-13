@@ -167,13 +167,41 @@ def get_path_to_current_file(file_obj):
     return os.path.dirname(os.path.abspath(file_obj))
 
 
-
-
-
-
-
+# # returns d
+# def get_path_l_of_files_in_dir(in_dir_path):
+#         # Getting the current work directory (cwd)
+#     thisdir = os.getcwd()
 # 
-# if __name__ == '__main__':
+#     # r=root, d=directories, f = files
+#     r, d, f  = os.walk(in_dir_path)
+#     return f
+
+# returns names of all file and dirs in dir
+def get_objects_in_dir(in_dir_path):
+    if is_dir(in_dir_path) != True:
+        raise Exception("ERROR:  in_dir_path must point to dir")
+    return os.listdir(in_dir_path)
+
+def get_abs_path_l_of_all_objects_in_dir(in_dir_path):
+    path_l = []
+    object_name_l = get_objects_in_dir(in_dir_path)
+    
+    for object_name in object_name_l:
+        path_l.append(in_dir_path + '//' + object_name)
+        
+    return path_l
+        
+        
+        
+        
+# 
+if __name__ == '__main__':
+    
+    in_dir_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\test_vids"
+#     print(get_path_l_of_files_in_dir(in_dir_path))
+    print(os.listdir(in_dir_path))
+    print(get_abs_path_l_of_all_objects_in_dir(in_dir_path))
+    
 #     print('in file_system_utils main...')
 # #     import download_vids
 # #     download_vids.download_vids(20, ['videomemes'])
@@ -186,5 +214,7 @@ def get_path_to_current_file(file_obj):
 # 
 
 # print(ntpath.basename("c:/basename"))
+
+
 
 
