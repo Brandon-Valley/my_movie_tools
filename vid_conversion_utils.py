@@ -40,14 +40,8 @@ def create_mp4_converted_copy_of_dir(in_dir_path, dest_parent_dir_path):
     
     for obj_path in obj_path_l:
         if fsu.is_file(obj_path):
-            # convert vid files, copy over other files
-            #```````````````````````````````````````````````````````````````````````````````````````````
-            print('--- '  + obj_path + '    ' + fsu.get_file_extension(obj_path) + '        ' + fsu.get_file_extension(obj_path) in VID_FILE_TYPES_TO_BE_CONVERTED)
-            
+            # convert vid files, copy over other files            
             if fsu.get_file_extension(obj_path) in VID_FILE_TYPES_TO_BE_CONVERTED:
-#                 new_converted_vid_file_path = new_dir_path + '//' + fsu.get_basename_from_path(obj_path)
-#                 new_converted_vid_file_path = fsu.replace_extension(new_converted_vid_file_path, 'mp4')
-#                 convert_vid_file_to_mp4(obj_path, new_converted_vid_file_path)
                 convert_vid_file_to_mp4(obj_path, new_dir_path)
 
             else:
@@ -59,22 +53,38 @@ def create_mp4_converted_copy_of_dir(in_dir_path, dest_parent_dir_path):
             raise Exception("ERROR:  obj_path must be a file or a dir")
             
 
+
+
 # converts and transfers dir or vid file to dest dir
 def convert_and_transfer(in_path, dest_parent_dir_path):
     if fsu.is_dir(in_path):
         create_mp4_converted_copy_of_dir(in_path, dest_parent_dir_path)
     elif fsu.is_file(in_path):
         if fsu.get_file_extension(in_path) in VID_FILE_TYPES_TO_BE_CONVERTED:
-            convert_vid_file_to_mp4(in_path, )
-            
+            convert_vid_file_to_mp4(in_path, dest_parent_dir_path)
+        else:
+            fsu.copy_object_to_dest(in_path, dest_parent_dir_path)
+    
+    
+    
+def convert_and_transfer_objects_from_path_l(in_path_l, dest_parent_dir_path):
+    for path in in_path_l:
+        convert_and_transfer(path, dest_parent_dir_path)
     
     
     
 in_path             = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\test_vids"
 dest_parent_dir_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\out_dir"
+outside_mkv_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\dolbycanyon_outside.mkv"
+path_l = [in_path, outside_mkv_path]
+    
+    
+convert_and_transfer_objects_from_path_l(path_l, dest_parent_dir_path)
     
 # create_mp4_converted_copy_of_dir('sdnfondso', 'sdnf')    
-create_mp4_converted_copy_of_dir(in_path, dest_parent_dir_path)
+# create_mp4_converted_copy_of_dir(in_path, dest_parent_dir_path)
+# convert_and_transfer(in_path, dest_parent_dir_path)
+# fsu.copy_object_to_dest(obj_path, new_dir_path)
 
 # 
 # test_vid_1_path = 'C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\test_vids\\Instructor.mkv'
