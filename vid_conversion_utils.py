@@ -4,7 +4,7 @@ import subprocess
 from turtle import done
 import os.path
 
-
+VID_FILE_TYPES_TO_BE_CONVERTED = ''
 
 def convert_vid_file_to_mp4(in_path, out_path):
     cmd = 'HandBrakeCLI --input ' + in_path + '  --output ' + out_path 
@@ -30,6 +30,7 @@ def create_mp4_converted_copy_of_dir(in_dir_path, out_parent_dir_path):
     for obj_path in obj_path_l:
         if fsu.is_file(obj_path):
             fsu.copy_object_to_dest(obj_path, new_dir_path)
+            
         elif fsu.is_dir(obj_path):
             create_mp4_converted_copy_of_dir(obj_path, new_dir_path)
         else:

@@ -174,14 +174,7 @@ def get_path_to_current_file(file_obj):
     return os.path.dirname(os.path.abspath(file_obj))
 
 
-# # returns d
-# def get_path_l_of_files_in_dir(in_dir_path):
-#         # Getting the current work directory (cwd)
-#     thisdir = os.getcwd()
-# 
-#     # r=root, d=directories, f = files
-#     r, d, f  = os.walk(in_dir_path)
-#     return f
+
 
 # returns names of all file and dirs in dir
 def get_objects_in_dir(in_dir_path):
@@ -200,6 +193,18 @@ def get_abs_path_l_of_all_objects_in_dir(in_dir_path):
     return path_l
         
         
+def get_file_extention(in_file_path):
+    if not is_file(in_file_path):
+        raise Exception("ERROR:  in_file_path must point to a file that exists")
+    
+    extension = os.path.splitext(in_file_path)[1]
+    
+    return extension
+    
+        
+        
+
+        
         
         
 # 
@@ -207,9 +212,14 @@ if __name__ == '__main__':
     
     in_dir_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\test_vids"
     out_parent_dir_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\out_dir"
-
+    aaa_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\out_dir\\test_vids\\aaa.sss"
     
-    copy_object_to_dest(in_dir_path, out_parent_dir_path)
+    
+    print(get_file_extention(aaa_path))
+    
+    
+    
+#     copy_object_to_dest(in_dir_path, out_parent_dir_path)
     
 #     print(get_path_l_of_files_in_dir(in_dir_path))
 #     print(os.listdir(in_dir_path))
