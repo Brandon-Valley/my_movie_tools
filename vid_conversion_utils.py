@@ -24,9 +24,16 @@ def create_mp4_converted_copy_of_dir(in_dir_path, out_parent_dir_path):
     new_dir_path = out_parent_dir_path + '//' + in_path_basename
     fsu.make_dir_if_not_exist(new_dir_path)
     
+    # copy all files to new dir and recursivly run this function on all contained dirs
     obj_path_l = fsu.get_abs_path_l_of_all_objects_in_dir(in_dir_path)
+    
     for obj_path in obj_path_l:
         if fsu.is_file(obj_path):
+            fsu.copy_object_to_dest(obj_path, new_dir_path)
+        elif fsu.is_dir(obj_path):
+            create_mp4_converted_copy_of_dir(obj_path, new_dir_path)
+        else:
+            raise Exception("ERROR:  obj_path must be a file or a dir")
             
     
     
