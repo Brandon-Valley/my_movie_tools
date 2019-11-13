@@ -10,21 +10,156 @@ import ntpath
  
 # VVVVV External VVVVV
 
+""" VVVVVVVVVV                             VVVVVVVVVV"""
+""" VVVVVVVVVV get info about GIVEN object VVVVVVVVVV"""
+""" VVVVVVVVVV                             VVVVVVVVVV"""
 
 def is_dir(in_path):
     return os.path.isdir(in_path)
 
-
 def is_file(in_path):
     return os.path.isfile(in_path)
 
+# gets size of dir (and maybe file?) in bytes
 
- 
+def get_size(start_path):
+    total_size = 0
+    for dirpath, dirnames, filenames in os.walk(start_path):
+        for f in filenames:
+            fp = os.path.join(dirpath, f)
+            # skip if it is symbolic link
+            if not os.path.islink(fp):
+                total_size += os.path.getsize(fp)
+    return total_size
+
+def get_basename_from_path(path):
+    return ntpath.basename(path)
+
+def get_parent_dir_from_path(path):
+    return os.path.dirname(path)
+
+def get_file_extention(in_file_path):
+    if not is_file(in_file_path):
+        raise Exception("ERROR:  in_file_path must point to a file that exists")
+    
+    extension = os.path.splitext(in_file_path)[1]
+    
+    return extension
+
+"""SHOULD PROBABLY RENAME
+# !!!!! ONLY WAY TO USE THIS FUNC:  file_system_utils.get_path_to_current_file(__file__) !!!!!
+# returns absolute path to the dir that contains the file that calls this function,
+# NOT the current working directory
+# the only reason this function is here is because I know that
+# if it isn't, I wont be able to find it later"""
+def get_path_to_current_file(file_obj):
+    return os.path.dirname(os.path.abspath(file_obj))
+
+
+
+""" VVVVVVVVVV                                         VVVVVVVVVV"""
+""" VVVVVVVVVV Get info about objects inside GIVEN DIR VVVVVVVVVV"""
+""" VVVVVVVVVV                                         VVVVVVVVVV"""
+
+
 def get_newest_file_path(dir_path):
     list_of_files = glob.glob(dir_path + '/*') # * means all if need specific format then *.csv
     latest_file = max(list_of_files, key=os.path.getctime)
     # print (latest_file)
     return latest_file
+
+def get_relative_path_of_files_in_dir(dir_path, file_type):
+    # Getting the current work directory (cwd)
+    thisdir = os.getcwd()
+    
+    path_list = []
+    # r=root, d=directories, f = files
+    for r, d, f in os.walk(dir_path):
+        for file in f:
+            if file_type in file:
+#                 print(os.path.join(r, file))
+                path_list.append(os.path.join(r, file))
+    return path_list
+
+def get_abs_path_l_of_all_objects_in_dir(in_dir_path):
+    path_l = []
+    object_name_l = get_objects_in_dir(in_dir_path)
+    
+    for object_name in object_name_l:
+        path_l.append(in_dir_path + '//' + object_name)
+        
+    return path_l
+
+"""returns oldest first, youngest last"""
+def get_file_paths_in_dir_by_age(dirpath):
+    a = [s for s in os.listdir(dirpath)
+         if os.path.isfile(os.path.join(dirpath, s))]
+    a.sort(key=lambda s: os.path.getmtime(os.path.join(dirpath, s)))
+    
+    abs_path_l = []
+    for rel_path in a:
+        abs_path_l.append(dirpath + '/' + rel_path)
+    return abs_path_l
+
+
+
+
+
+"""VVVVVVVVVV                                   VVVVVVVVVV"""
+"""VVVVVVVVVV  Operate on or move given OBJECT(s)  VVVVVVVVV"""
+"""VVVVVVVVVV                                   VVVVVVVVVV"""
+
+
+def copy_object_to_dest(in_path, dest_parent_dir_path):
+    make_dir_if_not_exist(dest_parent_dir_path)
+
+    if   os.path.isdir(in_path):
+        copy_tree(in_path, dest_parent_dir_path)
+    elif os.path.isfile(in_path):
+        shutil.copy(in_path, dest_parent_dir_path)
+
+def make_dir_if_not_exist(dir_path):
+    if not os.path.exists(dir_path):
+        os.makedirs(dir_path)
+        
+def delete_if_exists(path):
+    if os.path.exists(path):
+        if   os.path.isdir(path):
+            shutil.rmtree(path)
+        elif os.path.isfile(path):
+            os.remove(path)
+        else:
+            raise Exception('ERROR:  Gave something that is not a file or a dir, bad path: ', path)
+
+def rename_file_overwrite(src_file_path, dest_file_path):
+    delete_if_exists(dest_file_path)
+    os.rename(src_file_path, dest_file_path)
+
+def copy_objects_to_dest(path_l, dest_parent_dir_path):
+    make_dir_if_not_exist(dest_parent_dir_path)
+    
+    for path in path_l:
+        if   os.path.isdir(path):
+            copy_tree(path, dest_parent_dir_path)
+        elif os.path.isfile(path):
+            shutil.copy(path, dest_parent_dir_path)
+
+def copy_files_to_dest(file_path_l, dest_dir_path): 
+#     if os.path.isdir(dest_dir_path) == False:
+#         os.mkdir(dest_dir_path)
+    make_dir_if_not_exist(dest_dir_path)
+               
+    for file_path in file_path_l:
+        shutil.copy(file_path, dest_dir_path )
+
+
+
+
+
+
+"""VVVVVVVVVV                                                 VVVVVVVVVV"""
+"""VVVVVVVVVV  Operate on or move given objects in GIVEN DIR  VVVVVVVVV"""
+"""VVVVVVVVVV                                                 VVVVVVVVVV"""
 
 
 def delete_all_files_in_dir(dir_path):
@@ -47,92 +182,28 @@ def delete_all_dirs_in_dir_if_exists(dir_path):
                 #elif os.path.isdir(file_path): shutil.rmtree(file_path)
             except Exception as e:
                 print(e)
-            
-def get_relative_path_of_files_in_dir(dir_path, file_type):
-    # Getting the current work directory (cwd)
-    thisdir = os.getcwd()
     
-    path_list = []
-    # r=root, d=directories, f = files
-    for r, d, f in os.walk(dir_path):
-        for file in f:
-            if file_type in file:
-#                 print(os.path.join(r, file))
-                path_list.append(os.path.join(r, file))
-    return path_list
+""" returns names of all file and dirs in dir """
+def get_objects_in_dir(in_dir_path):
+
+    if is_dir(in_dir_path) != True:
+        raise Exception("ERROR:  in_dir_path must point to dir")
+    return os.listdir(in_dir_path)
+
+
             
             
 # works for files and dirs
 
 
-def copy_object_to_dest(in_path, dest_parent_dir_path):
-    make_dir_if_not_exist(dest_parent_dir_path)
 
-    if   os.path.isdir(in_path):
-        copy_tree(in_path, dest_parent_dir_path)
-    elif os.path.isfile(in_path):
-        shutil.copy(in_path, dest_parent_dir_path)
-        
-
-def copy_objects_to_dest(path_l, dest_parent_dir_path):
-    make_dir_if_not_exist(dest_parent_dir_path)
-    
-    for path in path_l:
-        if   os.path.isdir(path):
-            copy_tree(path, dest_parent_dir_path)
-        elif os.path.isfile(path):
-            shutil.copy(path, dest_parent_dir_path)
-
-            
-            
-            
-            
-def copy_files_to_dest(file_path_l, dest_dir_path): 
-#     if os.path.isdir(dest_dir_path) == False:
-#         os.mkdir(dest_dir_path)
-    make_dir_if_not_exist(dest_dir_path)
-               
-    for file_path in file_path_l:
-        shutil.copy(file_path, dest_dir_path )
-            
-            
-def make_dir_if_not_exist(dir_path):
-    if not os.path.exists(dir_path):
-        os.makedirs(dir_path)
-        
-def delete_if_exists(path):
-    if os.path.exists(path):
-        if   os.path.isdir(path):
-            shutil.rmtree(path)
-        elif os.path.isfile(path):
-            os.remove(path)
-        else:
-            raise Exception('ERROR:  Gave something that is not a file or a dir, bad path: ', path)
         
         
-# gets size of dir (and maybe file?) in bytes
-def get_size(start_path):
-    total_size = 0
-    for dirpath, dirnames, filenames in os.walk(start_path):
-        for f in filenames:
-            fp = os.path.join(dirpath, f)
-            # skip if it is symbolic link
-            if not os.path.islink(fp):
-                total_size += os.path.getsize(fp)
-    return total_size
         
-
-# returns oldest first, youngest last
-def get_file_paths_in_dir_by_age(dirpath):
-    a = [s for s in os.listdir(dirpath)
-         if os.path.isfile(os.path.join(dirpath, s))]
-    a.sort(key=lambda s: os.path.getmtime(os.path.join(dirpath, s)))
-    
-    abs_path_l = []
-    for rel_path in a:
-        abs_path_l.append(dirpath + '/' + rel_path)
-    return abs_path_l
-
+        
+"""VVVVVVVVVV                      VVVVVVVVVV"""
+"""VVVVVVVVVV Get info about path  VVVVVVVVVV"""
+"""VVVVVVVVVV                      VVVVVVVVVV"""
 
 
 def is_path_creatable(pathname):
@@ -146,6 +217,7 @@ def is_path_creatable(pathname):
     return os.access(dirname, os.W_OK)
 
 # returns true if path could be created and ends with ext
+
 def is_file_path_valid(path, extention = None):
     if not is_path_creatable(path):
         return False
@@ -154,60 +226,14 @@ def is_file_path_valid(path, extention = None):
     return True
     
     
-def get_basename_from_path(path):
-    return ntpath.basename(path)
 
-def get_parent_dir_from_path(path):
-    return os.path.dirname(path)
     
-def rename_file_overwrite(src_file_path, dest_file_path):
-    delete_if_exists(dest_file_path)
-    os.rename(src_file_path, dest_file_path)
+
     
-# SHOULD PROBABLY RENAME
-# !!!!! ONLY WAY TO USE THIS FUNC:  file_system_utils.get_path_to_current_file(__file__) !!!!!
-# returns absolute path to the dir that contains the file that calls this function,
-# NOT the current working directory
-# the only reason this function is here is because I know that
-# if it isn't, I wont be able to find it later
-def get_path_to_current_file(file_obj):
-    return os.path.dirname(os.path.abspath(file_obj))
+"""VVVVVVVVVV WORKING VVVVVVVVV"""
 
 
-
-
-# returns names of all file and dirs in dir
-def get_objects_in_dir(in_dir_path):
-    if is_dir(in_dir_path) != True:
-        raise Exception("ERROR:  in_dir_path must point to dir")
-    return os.listdir(in_dir_path)
-
-
-def get_abs_path_l_of_all_objects_in_dir(in_dir_path):
-    path_l = []
-    object_name_l = get_objects_in_dir(in_dir_path)
-    
-    for object_name in object_name_l:
-        path_l.append(in_dir_path + '//' + object_name)
-        
-    return path_l
-        
-        
-def get_file_extention(in_file_path):
-    if not is_file(in_file_path):
-        raise Exception("ERROR:  in_file_path must point to a file that exists")
-    
-    extension = os.path.splitext(in_file_path)[1]
-    
-    return extension
-    
-        
-        
-
-        
-        
-        
-# 
+ 
 if __name__ == '__main__':
     
     in_dir_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\test_vids"
@@ -216,28 +242,6 @@ if __name__ == '__main__':
     
     
     print(get_file_extention(aaa_path))
-    
-    
-    
-#     copy_object_to_dest(in_dir_path, out_parent_dir_path)
-    
-#     print(get_path_l_of_files_in_dir(in_dir_path))
-#     print(os.listdir(in_dir_path))
-#     print(get_abs_path_l_of_all_objects_in_dir(in_dir_path))
-    
-#     print('in file_system_utils main...')
-# #     import download_vids
-# #     download_vids.download_vids(20, ['videomemes'])
-# #     print(get_relative_path_of_files_in_dir('vids_to_compile', '.mp4'))
-#     file_path_l = ['C:/Users/Brandon/Documents/Personal_Projects/reddit_comp/old/output.mp4',
-#                     'C:/Users/Brandon/Documents/Personal_Projects/reddit_comp/old/post_0000.mp4']
-#     dest_file_path = 'clips_to_compile'
-#     copy_files_to_dest(file_path_l, dest_file_path)
-# 
-# 
-
-# print(ntpath.basename("c:/basename"))
-
 
 
 
