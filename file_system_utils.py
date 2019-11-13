@@ -9,7 +9,16 @@ import ntpath
 
  
 # VVVVV External VVVVV
- 
+
+
+def is_dir(in_path):
+    return os.path.isdir(in_path)
+
+
+def is_file(in_path):
+    return os.path.isfile(in_path)
+
+
  
 def get_newest_file_path(dir_path):
     list_of_files = glob.glob(dir_path + '/*') # * means all if need specific format then *.csv
@@ -54,6 +63,10 @@ def get_relative_path_of_files_in_dir(dir_path, file_type):
             
             
 # works for files and dirs
+
+
+
+
 def copy_objects_to_dest(path_l, dest_dir_path):
     make_dir_if_not_exist(dest_dir_path)
     

@@ -14,7 +14,7 @@ def convert_vid_file_to_mp4(in_path, out_path):
 # given the path to a dir with both vid files and non-vid files, will create a copy
 # of that dir with all the vids converted to mp4s
 def create_mp4_converted_copy_of_dir(in_path, out_parent_dir_path):
-    if os.path.isdir(in_path) != True:
+    if file_system_utils.is_dir(in_path) != True:
         raise Exception("ERROR:  in_path must point to dir")
     if file_system_utils.get_parent_dir_from_path(in_path) == out_parent_dir_path:
         raise Exception("ERROR:  out_parent_dir_path cannot be the parent dir of in_path")    
@@ -23,8 +23,10 @@ def create_mp4_converted_copy_of_dir(in_path, out_parent_dir_path):
     in_path_basename = file_system_utils.get_basename_from_path(in_path)
     new_root_dir_path = out_parent_dir_path + '//' + in_path_basename
     
-    print(new_root_dir_path)
+#     print(new_root_dir_path)
     file_system_utils.make_dir_if_not_exist(new_root_dir_path)
+    
+    
     
     
     
