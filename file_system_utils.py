@@ -65,16 +65,23 @@ def get_relative_path_of_files_in_dir(dir_path, file_type):
 # works for files and dirs
 
 
+def copy_object_to_dest(in_path, dest_parent_dir_path):
+    make_dir_if_not_exist(dest_parent_dir_path)
 
+    if   os.path.isdir(in_path):
+        copy_tree(in_path, dest_parent_dir_path)
+    elif os.path.isfile(in_path):
+        shutil.copy(in_path, dest_parent_dir_path)
+        
 
-def copy_objects_to_dest(path_l, dest_dir_path):
-    make_dir_if_not_exist(dest_dir_path)
+def copy_objects_to_dest(path_l, dest_parent_dir_path):
+    make_dir_if_not_exist(dest_parent_dir_path)
     
     for path in path_l:
         if   os.path.isdir(path):
-            copy_tree(path, dest_dir_path)
+            copy_tree(path, dest_parent_dir_path)
         elif os.path.isfile(path):
-            shutil.copy(path, dest_dir_path)
+            shutil.copy(path, dest_parent_dir_path)
 
             
             
@@ -182,6 +189,7 @@ def get_objects_in_dir(in_dir_path):
         raise Exception("ERROR:  in_dir_path must point to dir")
     return os.listdir(in_dir_path)
 
+
 def get_abs_path_l_of_all_objects_in_dir(in_dir_path):
     path_l = []
     object_name_l = get_objects_in_dir(in_dir_path)
@@ -198,9 +206,14 @@ def get_abs_path_l_of_all_objects_in_dir(in_dir_path):
 if __name__ == '__main__':
     
     in_dir_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\test_vids"
+    out_parent_dir_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\out_dir"
+
+    
+    copy_object_to_dest(in_dir_path, out_parent_dir_path)
+    
 #     print(get_path_l_of_files_in_dir(in_dir_path))
-    print(os.listdir(in_dir_path))
-    print(get_abs_path_l_of_all_objects_in_dir(in_dir_path))
+#     print(os.listdir(in_dir_path))
+#     print(get_abs_path_l_of_all_objects_in_dir(in_dir_path))
     
 #     print('in file_system_utils main...')
 # #     import download_vids

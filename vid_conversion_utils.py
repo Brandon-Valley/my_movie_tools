@@ -1,4 +1,4 @@
-import file_system_utils
+import file_system_utils as fsu
 
 import subprocess
 from turtle import done
@@ -13,18 +13,21 @@ def convert_vid_file_to_mp4(in_path, out_path):
     
 # given the path to a dir with both vid files and non-vid files, will create a copy
 # of that dir with all the vids converted to mp4s
-def create_mp4_converted_copy_of_dir(in_path, out_parent_dir_path):
-    if file_system_utils.is_dir(in_path) != True:
-        raise Exception("ERROR:  in_path must point to dir")
-    if file_system_utils.get_parent_dir_from_path(in_path) == out_parent_dir_path:
-        raise Exception("ERROR:  out_parent_dir_path cannot be the parent dir of in_path")    
+def create_mp4_converted_copy_of_dir(in_dir_path, out_parent_dir_path):
+    if fsu.is_dir(in_dir_path) != True:
+        raise Exception("ERROR:  in_dir_path must point to dir")
+    if fsu.get_parent_dir_from_path(in_path) == out_parent_dir_path:
+        raise Exception("ERROR:  out_parent_dir_path cannot be the parent dir of in_dir_path")    
     
+    # make new empty dir
+    in_path_basename = fsu.get_basename_from_path(in_dir_path)
+    new_dir_path = out_parent_dir_path + '//' + in_path_basename
+    fsu.make_dir_if_not_exist(new_dir_path)
     
-    in_path_basename = file_system_utils.get_basename_from_path(in_path)
-    new_root_dir_path = out_parent_dir_path + '//' + in_path_basename
-    
-#     print(new_root_dir_path)
-    file_system_utils.make_dir_if_not_exist(new_root_dir_path)
+    obj_path_l = fsu.get_abs_path_l_of_all_objects_in_dir(in_dir_path)
+    for obj_path in obj_path_l:
+        if fsu.is_file(obj_path):
+            
     
     
     
