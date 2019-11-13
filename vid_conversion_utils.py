@@ -6,9 +6,14 @@ import os.path
 
 VID_FILE_TYPES_TO_BE_CONVERTED = ['.avi', '.mkv']
 
-def convert_vid_file_to_mp4(in_path, out_path):
-    print(' converting ', in_path, " to ", out_path)#````````````````````````````````````````````````````````````
-    cmd = 'HandBrakeCLI --input ' + in_path + '  --output ' + out_path 
+def convert_vid_file_to_mp4(in_path, dest_parent_dir_path):
+    print(' converting ', in_path, " to inside of ", dest_parent_dir_path)#````````````````````````````````````````````````````````````
+    
+    in_basename = fsu.get_basename_from_path(in_path)
+    out_basename = fsu.replace_extension(in_basename, 'mp4')
+    dest_path = dest_parent_dir_path + '//' + out_basename
+    
+    cmd = 'HandBrakeCLI --input "' + in_path + '"  --output "' + dest_path + '"'
     subprocess.call(cmd, shell=True)
     
     
@@ -31,16 +36,20 @@ def create_mp4_converted_copy_of_dir(in_dir_path, dest_parent_dir_path):
     
     # copy all files to new dir and recursivly run this function on all contained dirs
     obj_path_l = fsu.get_abs_path_l_of_all_objects_in_dir(in_dir_path)
+    print('obj_path_l:  ', obj_path_l)#`````````````````````````````````````````````````````````````````````````````
     
     for obj_path in obj_path_l:
         if fsu.is_file(obj_path):
             # convert vid files, copy over other files
             #```````````````````````````````````````````````````````````````````````````````````````````
-            print('--- '  + obj_path + '    ' + fsu.get_file_extention(obj_path) + '        ' + fsu.get_file_extention(obj_path) in VID_FILE_TYPES_TO_BE_CONVERTED)
+            print('--- '  + obj_path + '    ' + fsu.get_file_extension(obj_path) + '        ' + fsu.get_file_extension(obj_path) in VID_FILE_TYPES_TO_BE_CONVERTED)
             
-            if fsu.get_file_extention(obj_path) in VID_FILE_TYPES_TO_BE_CONVERTED:
-                new_converted_vid_file_path = new_dir_path + fsu.get_basename_from_path(obj_path)
-                convert_vid_file_to_mp4(obj_path, new_converted_vid_file_path)
+            if fsu.get_file_extension(obj_path) in VID_FILE_TYPES_TO_BE_CONVERTED:
+#                 new_converted_vid_file_path = new_dir_path + '//' + fsu.get_basename_from_path(obj_path)
+#                 new_converted_vid_file_path = fsu.replace_extension(new_converted_vid_file_path, 'mp4')
+#                 convert_vid_file_to_mp4(obj_path, new_converted_vid_file_path)
+                convert_vid_file_to_mp4(obj_path, new_dir_path)
+
             else:
                 fsu.copy_object_to_dest(obj_path, new_dir_path)
             
@@ -50,12 +59,13 @@ def create_mp4_converted_copy_of_dir(in_dir_path, dest_parent_dir_path):
             raise Exception("ERROR:  obj_path must be a file or a dir")
             
 
-# # converts and transfers dir or vid file to dest dir
-# def convert_and_transfer(in_path, dest_parent_dir_path):
-#     if fsu.is_dir(in_path):
-#         create_mp4_converted_copy_of_dir(in_path, dest_parent_dir_path)
-#     elif fsu.is_file(in_path):
-#         if fsu.get_file_extention(in_path) in VID_FILE_TYPES_TO_BE_CONVERTED:
+# converts and transfers dir or vid file to dest dir
+def convert_and_transfer(in_path, dest_parent_dir_path):
+    if fsu.is_dir(in_path):
+        create_mp4_converted_copy_of_dir(in_path, dest_parent_dir_path)
+    elif fsu.is_file(in_path):
+        if fsu.get_file_extension(in_path) in VID_FILE_TYPES_TO_BE_CONVERTED:
+            convert_vid_file_to_mp4(in_path, )
             
     
     
