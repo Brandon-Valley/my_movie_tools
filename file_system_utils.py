@@ -38,7 +38,7 @@ def get_basename_from_path(path):
 def get_parent_dir_from_path(path):
     return os.path.dirname(path)
 
-def get_file_extention(in_file_path):
+def get_file_extension(in_file_path):
     if not is_file(in_file_path):
         raise Exception("ERROR:  in_file_path must point to a file that exists")
     
@@ -201,9 +201,9 @@ def get_objects_in_dir(in_dir_path):
         
         
         
-"""VVVVVVVVVV                      VVVVVVVVVV"""
-"""VVVVVVVVVV Get info about path  VVVVVVVVVV"""
-"""VVVVVVVVVV                      VVVVVVVVVV"""
+"""VVVVVVVVVV                              VVVVVVVVVV"""
+"""VVVVVVVVVV Get info about or edit path  VVVVVVVVVV"""
+"""VVVVVVVVVV                              VVVVVVVVVV"""
 
 
 def is_path_creatable(pathname):
@@ -218,16 +218,29 @@ def is_path_creatable(pathname):
 
 # returns true if path could be created and ends with ext
 
-def is_file_path_valid(path, extention = None):
+def is_file_path_valid(path, extension = None):
     if not is_path_creatable(path):
         return False
-    if extention != None and not path.endswith(extention):
+    if extension != None and not path.endswith(extension):
         return False
     return True
     
+""" returns given path with replaced extension: mp4, jpg, ect... """
+def replace_extension(in_file_path, new_extension):  
+    path_split = os.path.splitext(in_file_path)
     
-
+    if len(path_split) < 2:
+        raise Exception("ERROR:  in_file_path must contain at least 1 '.'")
     
+    new_path = ''
+    for str in path_split[0:-1]:
+        new_path += str + '.'
+    new_path += new_extension
+    
+    return new_path
+        
+    
+ 
 
     
 """VVVVVVVVVV WORKING VVVVVVVVV"""
@@ -239,9 +252,15 @@ if __name__ == '__main__':
     in_dir_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\test_vids"
     out_parent_dir_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\out_dir"
     aaa_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\out_dir\\test_vids\\aaa.sss"
+    mkv_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\test_vids\\Screen_MAKE_SUERE_THIS_WORKS_WITH_SPACE.mkv"
+    l = ['.avi', '.mkv']
+    
+    print(replace_extension(mkv_path, 'mp4'))
+    
+#     print(get_file_extension(mkv_path) in l)
     
     
-    print(get_file_extention(aaa_path))
+#     print(get_file_extension(aaa_path))
 
 
 
