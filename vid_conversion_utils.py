@@ -1,3 +1,5 @@
+# https://lifehacker.com/set-up-a-fully-automated-torrent-seeding-media-center-5595586
+
 import file_system_utils as fsu
 
 import subprocess
@@ -25,7 +27,7 @@ def convert_vid_file_to_mp4(in_path, dest_parent_dir_path):
 def create_mp4_converted_copy_of_dir(in_dir_path, dest_parent_dir_path):
     if fsu.is_dir(in_dir_path) != True:
         raise Exception("ERROR:  in_dir_path must point to dir")
-    if fsu.get_parent_dir_from_path(in_path) == dest_parent_dir_path:
+    if fsu.get_parent_dir_from_path(in_dir_path) == dest_parent_dir_path:
         raise Exception("ERROR:  dest_parent_dir_path cannot be the parent dir of in_dir_path")    
     
     # make new empty dir
@@ -73,42 +75,16 @@ def convert_and_transfer_objects_from_path_l(in_path_l, dest_parent_dir_path):
     
     
     
-in_path             = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\test_vids"
-dest_parent_dir_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\out_dir"
-outside_mkv_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\dolbycanyon_outside.mkv"
-path_l = [in_path, outside_mkv_path]
+# in_path              = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\test_vids"
+dest_parent_dir_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\transfer_dir"
+# dest_parent_dir_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\out_dir"
+# outside_mkv_path     = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\dolbycanyon_outside.mkv"
+path_l = ["C:\\Users\\Brandon\\AppData\\Roaming\\I2P\\i2psnark\\Game_Of_Thrones\\Game of Thrones Season 1 (1080p x265 10bit Joy)",
+          ]
     
     
 convert_and_transfer_objects_from_path_l(path_l, dest_parent_dir_path)
     
-# create_mp4_converted_copy_of_dir('sdnfondso', 'sdnf')    
-# create_mp4_converted_copy_of_dir(in_path, dest_parent_dir_path)
-# convert_and_transfer(in_path, dest_parent_dir_path)
-# fsu.copy_object_to_dest(obj_path, new_dir_path)
-
-# 
-# test_vid_1_path = 'C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\test_vids\\Instructor.mkv'
-# test_out_path   = 'C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\test_vids\\Instructor.mp4'
-# test_out_path   = 'C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\test_vids\\Instructor2.mp4'
-# # test_out_path   = 'Instructor.mp4"'
-# # test_out_path   = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\test_vids\\Screen Test- Dance Instructor.mp4"
-# 
-# # cmd = 'HandBrakeCLI --input ' + test_vid_1_path + ' --title 0 --preset Normal --output ' + test_out_path
-# # cmd = 'HandBrakeCLI --input ' + test_vid_1_path + ' --title 0 --preset Normal --output ' + test_out_path
-# # cmd = 'HandBrakeCLI --input ' + test_vid_1_path + ' --preset Normal --output ' + test_out_path
-# # cmd = 'HandBrakeCLI --input ' + test_vid_1_path + '  --output ' + test_out_path 
-# # print(cmd)
-# # 
-# # subprocess.call(cmd, shell=True) ; done
-# 
-# convert_vid_file_to_mp4(test_vid_1_path, test_out_path) ; done
-# 
-# for x in range (10):
-#     print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-# 
-# 
-# 
-# cmd = 'HandBrakeCLI --input ' + test_vid_1_path + '  --output ' + test_out_path2 
 
 
 
