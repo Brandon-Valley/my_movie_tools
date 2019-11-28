@@ -135,7 +135,7 @@ def delete_if_exists(path):
 
 ''' will do nothing if src_file_path == dest_file_path '''
 def rename_file_overwrite(src_file_path, dest_file_path):
-    if os.path.normpath(src_file_path) != os.path.normpath(dest_file_path):        
+    if not paths_equal(src_file_path, dest_file_path):        
         delete_if_exists(dest_file_path)
         os.rename(src_file_path, dest_file_path)
 
@@ -250,8 +250,9 @@ def replace_extension(in_file_path, new_extension):
     
     return new_path
         
-    
- 
+''' returns T/F if 2 paths point to same place '''
+def paths_equal(path_1, path_2):
+    return os.path.abspath(path_1) == os.path.abspath(path_2)
 
     
 """VVVVVVVVVV WORKING VVVVVVVVV"""
@@ -259,19 +260,24 @@ def replace_extension(in_file_path, new_extension):
 
  
 if __name__ == '__main__':
-    
-    in_dir_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\test_vids"
-    out_parent_dir_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\out_dir"
-    aaa_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\out_dir\\test_vids\\aaa.sss"
-    mkv_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\test_vids\\Screen_MAKE_SUERE_THIS_WORKS_WITH_SPACE.mkv"
-    l = ['.avi', '.mkv']
-    
-    print(replace_extension(mkv_path, 'mp4'))
-    
-#     print(get_file_extension(mkv_path) in l)
+    print(paths_equal('ptest.py', "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools\\ptest.py"))
+#     print(rename_file_overwrite('ptest.py', "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools\\ptest.py"))
     
     
-#     print(get_file_extension(aaa_path))
+    
+    
+#     in_dir_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\test_vids"
+#     out_parent_dir_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\out_dir"
+#     aaa_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\out_dir\\test_vids\\aaa.sss"
+#     mkv_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\test_vids\\Screen_MAKE_SUERE_THIS_WORKS_WITH_SPACE.mkv"
+#     l = ['.avi', '.mkv']
+#     
+#     print(replace_extension(mkv_path, 'mp4'))
+#     
+# #     print(get_file_extension(mkv_path) in l)
+#     
+#     
+# #     print(get_file_extension(aaa_path))
 
 
 
