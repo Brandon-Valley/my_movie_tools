@@ -68,6 +68,7 @@ def get_newest_file_path(dir_path):
     # print (latest_file)
     return latest_file
 
+'''returns list'''
 def get_relative_path_of_files_in_dir(dir_path, file_type):
     # Getting the current work directory (cwd)
     thisdir = os.getcwd()
@@ -131,9 +132,12 @@ def delete_if_exists(path):
         else:
             raise Exception('ERROR:  Gave something that is not a file or a dir, bad path: ', path)
 
+
+''' will do nothing if src_file_path == dest_file_path '''
 def rename_file_overwrite(src_file_path, dest_file_path):
-    delete_if_exists(dest_file_path)
-    os.rename(src_file_path, dest_file_path)
+    if os.path.normpath(src_file_path) != os.path.normpath(dest_file_path):        
+        delete_if_exists(dest_file_path)
+        os.rename(src_file_path, dest_file_path)
 
 def copy_objects_to_dest(path_l, dest_parent_dir_path):
     make_dir_if_not_exist(dest_parent_dir_path)
@@ -151,6 +155,13 @@ def copy_files_to_dest(file_path_l, dest_dir_path):
                
     for file_path in file_path_l:
         shutil.copy(file_path, dest_dir_path )
+        
+'''copies then deletes'''
+def move_files_to_dest(file_path_l, dest_dir_path): 
+    copy_files_to_dest(file_path_l, dest_dir_path)
+    
+    for path in file_path_l:
+        delete_if_exists(path)
 
 
 

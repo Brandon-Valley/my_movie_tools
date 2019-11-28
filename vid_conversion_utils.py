@@ -79,13 +79,14 @@ def convert_and_transfer_objects_from_path_l(in_path_l, dest_parent_dir_path):
 dest_parent_dir_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\transfer_dir"
 # dest_parent_dir_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\out_dir"
 # outside_mkv_path     = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\dolbycanyon_outside.mkv"
-path_l = ["C:\\Users\\Brandon\\AppData\\Roaming\\I2P\\i2psnark\\Game_Of_Thrones\\Game of Thrones Season 1 (1080p x265 10bit Joy)",
+path_l = ["hF:\\Movies_and_TV\\Movies\\zzz_to_convert",
           ]
     
     
 convert_and_transfer_objects_from_path_l(path_l, dest_parent_dir_path)
     
-
+mkvpropedit options "F:\Movies_and_TV\Movies\___DVD_RIP\Wreck-It Ralph [720p].mkv" -l
+mkvpropedit "F:\Movies_and_TV\Movies\___DVD_RIP\Wreck-It Ralph [720p].mkv" -l
 
 
 

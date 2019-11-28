@@ -1,5 +1,9 @@
 import audio_edit_utils
+import vid_utils
 
+
+# "C:\Program Files\VideoLAN\VLC\vlc.exe" --start-time=35 "C:\Users\Brandon\AppData\Roaming\I2P\i2psnark\Rick.and.Morty.S04E03.720p.WEBRip.x264-TBS[rarbg]\rick.and.morty.s04e03.720p.webrip.x264-tbs.mkv"
+# "C:\Program Files\VideoLAN\VLC\vlc.exe" --start-time=150 "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\transfer_dir\\Atonement_(720).m4v"
 
 
 # import speech_recognition as sr
@@ -18,11 +22,14 @@ import time
 
 
 
-VID_FILE_PATH = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\dolbycanyon_outside.mkv"
+
+
+# VID_FILE_PATH = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\dolbycanyon_outside.mkv"
+VID_FILE_PATH = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\transfer_dir\\Atonement_(720).m4v"
 # VID_FILE_PATH = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\Screen.mkv"
 
-FULL_AUDIO_PATH = 'full_audio.wav'
-CLIPED_AUDIO_PATH = 'clipped_audio.wav'
+FULL_AUDIO_PATH   = '..\\my_movie_tools_big_data\\full_audio.wav'
+CLIPED_AUDIO_PATH = '..\\my_movie_tools_big_data\\clipped_audio.wav'
 AUDIO_CLIP_TIME = 10 # number of seconds to divide audio into to check for speech
 
 
@@ -32,7 +39,7 @@ AUDIO_CLIP_TIME = 10 # number of seconds to divide audio into to check for speec
 # returns # of seconds after start_time before the first time someone speaks in the audio (.wav file)
 # returns False if there is no speech in audio clip
 def get_first_speech_time(full_audio_path, start_time):
-    audio_duration = audio_edit_utils.get_audio_duration(full_audio_path) # use !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    audio_duration = audio_edit_utils.get_audio_duration(full_audio_path)
     cur_time = start_time
     keep_looping = True
     
@@ -48,7 +55,6 @@ def get_first_speech_time(full_audio_path, start_time):
         
         # transcribe audio
         transcription = audio_edit_utils.transcribe_audio(CLIPED_AUDIO_PATH)
-        print(transcription) #`````````````````````````````````````````````````````````````````````````````````````````
 
         # return time if speech was found in audio clip
         if transcription != False:
