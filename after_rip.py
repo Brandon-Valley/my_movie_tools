@@ -68,7 +68,7 @@ def disable_mkv_default_subtitles(in_vid_path):
 
 
 if EPISODE_MODE:
-    START_DIR_PATH = "C:\\Video\\a"
+    START_DIR_PATH = "C:\\Video"
     abs_path_l = fsu.get_file_paths_in_dir_by_age(START_DIR_PATH)
     
     
