@@ -76,17 +76,17 @@ def convert_and_transfer_objects_from_path_l(in_path_l, dest_parent_dir_path):
     
     
 # in_path              = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\test_vids"
-dest_parent_dir_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\transfer_dir"
+dest_parent_dir_path = "F:\\Photos\\2019\\Birthdays\\Birthday - Sue Valley (2019)\\Videos\\MP4 Files"
 # dest_parent_dir_path = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\out_dir"
 # outside_mkv_path     = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\dolbycanyon_outside.mkv"
-path_l = ["hF:\\Movies_and_TV\\Movies\\zzz_to_convert",
+path_l = ["F:\\Photos\\2019\\Birthdays\\Birthday - Sue Valley (2019)\\Videos\\.MOV Files",
           ]
     
     
 convert_and_transfer_objects_from_path_l(path_l, dest_parent_dir_path)
     
-mkvpropedit options "F:\Movies_and_TV\Movies\___DVD_RIP\Wreck-It Ralph [720p].mkv" -l
-mkvpropedit "F:\Movies_and_TV\Movies\___DVD_RIP\Wreck-It Ralph [720p].mkv" -l
+# mkvpropedit options "F:\Movies_and_TV\Movies\___DVD_RIP\Wreck-It Ralph [720p].mkv" -l
+# mkvpropedit "F:\Movies_and_TV\Movies\___DVD_RIP\Wreck-It Ralph [720p].mkv" -l
 
 
 
