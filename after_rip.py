@@ -18,7 +18,7 @@ NEW_FILE_NAME = 'Peter Pan 2 - Return to Never Land.mkv'
 # NEW_FILE_NAME = 'The Lord of the Rings 2 - The Two Towers.mkv'
 
 # SE_L = episode_lists.SE_L
-FIRST_EPISODE_NUM = 9
+# FIRST_EPISODE_NUM = 13
 # NUM_EPISODES = 4
 SEASON_NUM = 1
 
@@ -73,12 +73,15 @@ if EPISODE_MODE:
     
     
     dest_dir_name = 'MacGyver\\MacGyver - Season ' + str(SEASON_NUM)
+    final_dest_dir_path = DVD_RIP_DIR_PATH + '\\' + dest_dir_name
+    dest_dir_abs_path_l = fsu.get_file_paths_in_dir_by_age(final_dest_dir_path)
+    num_episodes_before_starting = len(dest_dir_abs_path_l)
     
     
     episode_name_l = []
     
     for x in range(len(abs_path_l)):
-        e_num = FIRST_EPISODE_NUM + x
+        e_num = num_episodes_before_starting + 1 + x
         file_name = "MacGyver - S" + str(SEASON_NUM) + " E" + str(e_num) + " - " + episode_lists.SE_L[SEASON_NUM - 1][e_num - 1] + '.mkv'
         print(file_name)
         episode_name_l.append(file_name)
@@ -97,7 +100,7 @@ if EPISODE_MODE:
     
     for path_num, og_vid_path in enumerate(reversed(abs_path_l)):
         disable_mkv_default_subtitles(og_vid_path)
-        rename_and_move_file_to_final_dest(og_vid_path, episode_name_l[path_num], DVD_RIP_DIR_PATH + '\\' + dest_dir_name)
+        rename_and_move_file_to_final_dest(og_vid_path, episode_name_l[path_num], final_dest_dir_path)
 else:
     START_DIR_PATH = "C:\\Video"
     abs_path_l = fsu.get_file_paths_in_dir_by_age(START_DIR_PATH)
