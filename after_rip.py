@@ -14,13 +14,13 @@ DVD_RIP_DIR_PATH = "F:\\Movies_and_TV\\Movies\\___DVD_RIP"
 
 # NEW_FILE_NAME = 'The Hunger Games 1.mkv'
 # NEW_FILE_NAME = 'Star Wars 3 - The Revenge of the Sith.mkv'
-NEW_FILE_NAME = 'Peter Pan 2 - Return to Never Land.mkv'
+NEW_FILE_NAME = 'The Maze Runner 3 The Death Cure.mkv'
 # NEW_FILE_NAME = 'The Lord of the Rings 2 - The Two Towers.mkv'
 
 # SE_L = episode_lists.SE_L
 # FIRST_EPISODE_NUM = 13
 # NUM_EPISODES = 4
-SEASON_NUM = 1
+SEASON_NUM = 7
 
 
     
@@ -55,13 +55,6 @@ def disable_mkv_default_subtitles(in_vid_path):
     subprocess.call(cmd)
 
 
-
-
-
-
-
-
-
 # mkvpropedit movie.mkv --edit track:s1 --set flag-default=0
 # mkvpropedit "C:\\Video\\Screen Test- Dance Instructor.mkv" --edit track:s1 --set flag-default=0
 # 
@@ -69,11 +62,15 @@ def disable_mkv_default_subtitles(in_vid_path):
 
 if EPISODE_MODE:
     START_DIR_PATH = "C:\\Video"
-    abs_path_l = fsu.get_file_paths_in_dir_by_age(START_DIR_PATH)
+#     abs_path_l = fsu.get_file_paths_in_dir_by_age(START_DIR_PATH)
+    abs_path_l = fsu.get_abs_path_l_of_all_object_type_in_dir(START_DIR_PATH, 'file')
     
     
     dest_dir_name = 'MacGyver\\MacGyver - Season ' + str(SEASON_NUM)
     final_dest_dir_path = DVD_RIP_DIR_PATH + '\\' + dest_dir_name
+    
+    fsu.make_dir_if_not_exist(final_dest_dir_path)
+    
     dest_dir_abs_path_l = fsu.get_file_paths_in_dir_by_age(final_dest_dir_path)
     num_episodes_before_starting = len(dest_dir_abs_path_l)
     
@@ -98,7 +95,7 @@ if EPISODE_MODE:
     
     
     
-    for path_num, og_vid_path in enumerate(reversed(abs_path_l)):
+    for path_num, og_vid_path in enumerate((abs_path_l)):
         disable_mkv_default_subtitles(og_vid_path)
         rename_and_move_file_to_final_dest(og_vid_path, episode_name_l[path_num], final_dest_dir_path)
 else:
@@ -114,6 +111,6 @@ print('done!')
 
 # ffmpeg -i "C:\Users\Brandon\Downloads\messages_0.3gpp" -vf "transpose=2" "C:\Users\Brandon\Documents\Personal_Projects\my_movie_tools_big_data\messages_0.3gpp.mp4"
 
+"C:\Users\Brandon\Documents\Personal_Projects\my_movie_tools_big_data\transfer_dir\MacGyver - S1 E1 - Pilot.mkv"
 
-
-
+mkvextract tracks "C:\Users\Brandon\Documents\Personal_Projects\my_movie_tools_big_data\transfer_dir\MacGyver - S1 E1 - Pilot.mkv" 2:"C:\Users\Brandon\Documents\Personal_Projects\my_movie_tools_big_data\transfer_dir\eng_sub.srt"
