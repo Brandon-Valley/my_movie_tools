@@ -4,7 +4,7 @@ from sms.file_system_utils import file_system_utils as fsu
 from sms.subprocess_utils import subprocess_utils as su
 
 import os
-from sms.file_system_utils.file_system_utils import abs_path
+import argparse
 
 PWD = os.path.dirname(os.path.abspath(__file__))
 
@@ -23,7 +23,7 @@ DEL_FILE_NAME_L = [
                   ]
 
 # test
-movie_pwd = "D:\\test\\Chicken Run (2000) [720p]"
+# movie_pwd = "D:\\test\\Chicken Run (2000) [720p]"
 
 
 def delete_all_metadata_from_all_mp4_in_dir(in_dir_path):
@@ -59,6 +59,19 @@ def delete_extra_files(in_dir_path):
     
 
 if __name__ == '__main__':
-    delete_extra_files(movie_pwd)
-    delete_all_metadata_from_all_mp4_in_dir(movie_pwd)
+                                                    
+    parser = argparse.ArgumentParser()
+    
+    parser.add_argument('-m', '--movie_pwd'               , default = "D:\\test\\Chicken Run (2000) [720p]")
+    args = parser.parse_args()
+
+    
+    delete_extra_files(args.movie_pwd)
+    delete_all_metadata_from_all_mp4_in_dir(args.movie_pwd)
+    
+    
+    
+    
+    
+    
     print('done')
