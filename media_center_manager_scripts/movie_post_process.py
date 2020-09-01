@@ -5,12 +5,12 @@ from sms.subprocess_utils import subprocess_utils as su
 
 import os
 import argparse
+import subprocess
 
 PWD = os.path.dirname(os.path.abspath(__file__))
 
 DEL_FILE_NAME_L = [
                     'folder.jpg',
-                    'movie.xml',
                     'WWW.YIFY-TORRENTS.COM.jpg',
                     'www.YTS.MX.jpg',
                     'RARBG.txt',
@@ -19,7 +19,9 @@ DEL_FILE_NAME_L = [
                     'Torrent Downloaded From ExtraTorrent.cc.txt',
                     'ETRG.mp4',
                     'Torrent Downloaded From ProstyleX.com.txt',
-                    'WWW.YTS.AG.jpg'
+                    'WWW.YTS.AG.jpg',
+                    'Screenshots',
+                    'movie.xml'
                   ]
 
 # test
@@ -40,6 +42,7 @@ def delete_all_metadata_from_all_mp4_in_dir(in_dir_path):
             # make temp file with deleted metadata
             cmd = 'ffmpeg -i "{}" -map_metadata "-1" -c:v copy -c:a copy "{}"'.format(abs_path, temp_no_metadata_file_abs_path)
             su.run_cmd_popen(cmd, print_output = False, print_cmd = True)#, shell = False, decode = False, strip = False, always_output_list = False, return_stderr = True)
+#             subprocess.call(cmd, shell = True)
             
             # delete og file
             fsu.delete_if_exists(abs_path)
@@ -62,12 +65,12 @@ if __name__ == '__main__':
                                                     
     parser = argparse.ArgumentParser()
     
-    parser.add_argument('-m', '--movie_pwd'               , default = "D:\\test\\Chicken Run (2000) [720p]")
+    parser.add_argument('-m', '--movie_pwd', default = "D:\\test\\Chicken Run (2000) [720p]")
     args = parser.parse_args()
 
     
     delete_extra_files(args.movie_pwd)
-    delete_all_metadata_from_all_mp4_in_dir(args.movie_pwd)
+#     delete_all_metadata_from_all_mp4_in_dir(args.movie_pwd)
     
     
     
