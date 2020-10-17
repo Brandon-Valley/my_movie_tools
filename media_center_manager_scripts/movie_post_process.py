@@ -21,7 +21,8 @@ DEL_FILE_NAME_L = [
                     'Torrent Downloaded From ProstyleX.com.txt',
                     'WWW.YTS.AG.jpg',
                     'Screenshots',
-                    'movie.xml'
+                    'ETRG.mp4'
+#                     'movie.xml'
                   ]
 
 # test
