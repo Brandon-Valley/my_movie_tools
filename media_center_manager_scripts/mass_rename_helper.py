@@ -4,7 +4,7 @@ from sms.file_system_utils import file_system_utils as fsu
 import os
 
 def replace_in_filenames_in_dir(dir_path, find_str, replace_str):
-    file_path_l = fsu.get_dir_content_l(dir_path, object_type = 'file', content_type = 'abs_path')
+    file_path_l = fsu.get_dir_content_l(dir_path, object_type = 'file', content_type = 'abs_path', recurs_dirs = True)
     
     for file_path in file_path_l:
         og_file_name = os.path.basename(file_path)
