@@ -54,7 +54,7 @@ def remove_ads_from_srt_file(srt_file_path):
     for timestamped_sub_l in timestamped_sub_ll:
 #         if any(subtitle_ad_line in SUBTITLE_AD_L for line in timestamped_sub_l):
         if any(item in SUBTITLE_AD_L for item in timestamped_sub_l):
-            print('removed ad: ', timestamped_sub_l)
+            print('removed ad: ', timestamped_sub_l, srt_file_path)
         else:
             trimmed_timestamped_sub_ll.append(timestamped_sub_l)
             
@@ -89,7 +89,8 @@ if __name__ == "__main__":
 #     make_forced_copy_of_zzz_files_in_dir(dir_path, recursive)
 
 #     remove_ads_from_srt_file("C:\\Users\\Brandon\\Documents\\Other\\temp\\Game of Thrones - S04E01 - Two Swords (2011) [480p]\\Game of Thrones - S04E01 - Two Swords (2011) [480p].eng.srt")
-    remove_ads_from_all_nested_srt_files_in_dir("C:\\Users\\Brandon\\Documents\\Other\\temp\\Game of Thrones - Season 4 (2011)")
+#     remove_ads_from_all_nested_srt_files_in_dir("C:\\Users\\Brandon\\Documents\\Other\\temp\\Game of Thrones - Season 4 (2011)")
+    remove_ads_from_all_nested_srt_files_in_dir("D:\\Movies_and_TV\\TV\\Game of Thrones\\Game of Thrones - Season 4 (2011)")
     
     
     
