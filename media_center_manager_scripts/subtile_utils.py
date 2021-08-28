@@ -41,14 +41,14 @@ def remove_ads_from_srt_file(srt_file_path):
         yield g
     
     og_lines = txt_logger.read(srt_file_path)
-    print(og_lines)
+#     print(og_lines)
     
 #     timestamped_sub_ll = og_lines.split('')
     timestamped_sub_ll = list(group(og_lines, ''))
     
-    print(timestamped_sub_ll)
-    print(timestamped_sub_ll[-1])
-    print(timestamped_sub_ll[-2])
+#     print(timestamped_sub_ll)
+#     print(timestamped_sub_ll[-1])
+#     print(timestamped_sub_ll[-2])
     
     trimmed_timestamped_sub_ll = []
     for timestamped_sub_l in timestamped_sub_ll:
@@ -58,19 +58,28 @@ def remove_ads_from_srt_file(srt_file_path):
         else:
             trimmed_timestamped_sub_ll.append(timestamped_sub_l)
             
-    print(trimmed_timestamped_sub_ll)
-    print(trimmed_timestamped_sub_ll[-2])
+#     print(trimmed_timestamped_sub_ll)
+#     print(trimmed_timestamped_sub_ll[-2])
     
     new_srt_lines = []
     for timestamped_sub_l in trimmed_timestamped_sub_ll:
         for srt_line in timestamped_sub_l:
             new_srt_lines.append(srt_line)
-    print(new_srt_lines)
+#     print(new_srt_lines)
     
     txt_logger.write(new_srt_lines, srt_file_path)
     
     
-#     new_srt_lines = []
+def remove_ads_from_all_nested_srt_files_in_dir(dir_path):
+    file_path_l = fsu.get_dir_content_l(dir_path, object_type = 'file', content_type = 'abs_path', recurs_dirs = True)
+    
+    for file_path in file_path_l:
+#         print(file_path)
+#         print(fsu.get_basename_from_path(file_path))
+        if fsu.get_basename_from_path(file_path).endswith('.srt'):
+#             print(file_path)
+            remove_ads_from_srt_file(file_path)
+
 
 
 if __name__ == "__main__":
@@ -79,5 +88,17 @@ if __name__ == "__main__":
 #     recursive = True
 #     make_forced_copy_of_zzz_files_in_dir(dir_path, recursive)
 
-    remove_ads_from_srt_file("C:\\Users\\Brandon\\Documents\\Other\\temp\\Game of Thrones - S04E01 - Two Swords (2011) [480p]\\Game of Thrones - S04E01 - Two Swords (2011) [480p].eng.srt")
+#     remove_ads_from_srt_file("C:\\Users\\Brandon\\Documents\\Other\\temp\\Game of Thrones - S04E01 - Two Swords (2011) [480p]\\Game of Thrones - S04E01 - Two Swords (2011) [480p].eng.srt")
+    remove_ads_from_all_nested_srt_files_in_dir("C:\\Users\\Brandon\\Documents\\Other\\temp\\Game of Thrones - Season 4 (2011)")
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     print('done')
