@@ -1,9 +1,13 @@
 from sms.file_system_utils import file_system_utils as fsu
 from sms.logger import txt_logger
+from pathlib import Path
+import subprocess
 
 SUBTITLE_AD_L = [
                     '-== [ www.OpenSubtitles.com ] ==-',
-                    '== sync, corrected by elderman =='
+                    '== sync, corrected by elderman ==',
+                    'Sync & corrections by honeybunny',
+                    'www.addic7ed.com'
                 ]
 
 # WRONG!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!   
@@ -79,7 +83,32 @@ def remove_ads_from_all_nested_srt_files_in_dir(dir_path):
         if fsu.get_basename_from_path(file_path).endswith('.srt'):
 #             print(file_path)
             remove_ads_from_srt_file(file_path)
+     
 
+def get_nested_media_file_path_l(in_dir_path): 
+    ''' Returns list of abs path strings to every .mp4, .mkv, and .avi file under in_dir_path recursively'''
+    pattern_l = ('*.mp4', '*.mkv', "*.avi") # the tuple of file types
+    
+    media_file_path_l = []
+        
+    for pattern in pattern_l:
+        pattern_media_file_path_str_l = list(path_obj.__str__() for path_obj in Path(in_dir_path).rglob(pattern))
+        media_file_path_l.extend(pattern_media_file_path_str_l)
+
+    return(media_file_path_l) 
+          
+          
+# Added OpenSubtitles creds with: filebot -script fn:configure
+def download_subtitles_for_single_media(media_file_path):
+#     cmd = 'filebot -script fn:suball "{}"'.format(media_file_path) 
+#     cmd = 'filebot -script dev:osdb.explain "{}" [-non-strict] --def fetch=y'.format(media_file_path) 
+
+    # only seems to download .eng.srt
+    cmd = 'filebot -get-subtitles -r "{}" -non-strict'.format(media_file_path) 
+    subprocess.call(cmd, shell = False)
+    
+def download_subtitles_for_all_media_files_in_nested_dirs(in_dir_path):
+    print(get_nested_media_file_path_l(in_dir_path))
 
 
 if __name__ == "__main__":
@@ -90,13 +119,16 @@ if __name__ == "__main__":
 
 #     remove_ads_from_srt_file("C:\\Users\\Brandon\\Documents\\Other\\temp\\Game of Thrones - S04E01 - Two Swords (2011) [480p]\\Game of Thrones - S04E01 - Two Swords (2011) [480p].eng.srt")
 #     remove_ads_from_all_nested_srt_files_in_dir("C:\\Users\\Brandon\\Documents\\Other\\temp\\Game of Thrones - Season 4 (2011)")
-    remove_ads_from_all_nested_srt_files_in_dir("D:\\Movies_and_TV\\TV\\Game of Thrones\\Game of Thrones - Season 4 (2011)")
+#     remove_ads_from_all_nested_srt_files_in_dir("D:\\Movies_and_TV\\TV\\Game of Thrones\\Game of Thrones - Season 4 (2011)")
     
     
     
-    
-    
-    
+#     test_path = "C:\\Users\\Brandon\\Documents\\Other\\temp\\Baby Driver (2017) [1080p]\\Baby Driver (2017) [1080p].mp4"
+    test_path = "C:\\Users\\Brandon\\Documents\\Other\\temp"
+#     test_path = "C:\\Users\\Brandon\\Documents\\Other\\temp\\A Quiet Place Part II (2021)\\A Quiet Place Part II (2020).mp4"
+#     test_path = '"A Quiet Place Part II (2020)"'
+#     download_subtitles_for_single_media(test_path)
+    download_subtitles_for_all_media_files_in_nested_dirs(test_path)
     
     
     

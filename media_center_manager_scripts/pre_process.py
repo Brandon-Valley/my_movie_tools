@@ -6,7 +6,7 @@
 # SCRIPT_PARENT_DIR = os.path.abspath(__file__)
 # 
 # os.chdir(SCRIPT_PARENT_DIR)
-
+import subtile_utils
 
 
 if __name__ == '__main__':
@@ -17,7 +17,8 @@ if __name__ == '__main__':
         
         import delete_metadata_from_mp4_files_in_nested_dirs
          
-        COMPLETED_DIR_PATH = 'C:\\vuze_downloads\\completed' 
+        # COMPLETED_DIR_PATH = 'C:\\vuze_downloads\\completed' 
+        COMPLETED_DIR_PATH = "D:\\working"
          
          
         print('Running Pre-Process on: ', COMPLETED_DIR_PATH)
