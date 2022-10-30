@@ -107,8 +107,14 @@ def download_subtitles_for_single_media(media_file_path):
     cmd = 'filebot -get-subtitles -r "{}" -non-strict'.format(media_file_path) 
     subprocess.call(cmd, shell = False)
     
+    
 def download_subtitles_for_all_media_files_in_nested_dirs(in_dir_path):
-    print(get_nested_media_file_path_l(in_dir_path))
+    '''Downloads subtitle file(s) next to each media file, so all media files should be in their own dir before running this'''
+    media_file_path_l = get_nested_media_file_path_l(in_dir_path)
+    
+    for media_file_path in media_file_path_l:
+        print("Downloading subtitles for {}...".format(media_file_path))
+        download_subtitles_for_single_media(media_file_path)
 
 
 if __name__ == "__main__":
@@ -123,8 +129,9 @@ if __name__ == "__main__":
     
     
     
-#     test_path = "C:\\Users\\Brandon\\Documents\\Other\\temp\\Baby Driver (2017) [1080p]\\Baby Driver (2017) [1080p].mp4"
-    test_path = "C:\\Users\\Brandon\\Documents\\Other\\temp"
+    test_path = "C:\\Users\\Brandon\\Documents\\Other\\temp\\Baby Driver (2017) [1080p]\\Baby Driver (2017) [1080p].mp4"
+    test_path = "C:\\Users\\Brandon\\Documents\\Other\\temp\\Baby Driver (2017) [1080p]"
+#     test_path = "C:\\Users\\Brandon\\Documents\\Other\\temp"
 #     test_path = "C:\\Users\\Brandon\\Documents\\Other\\temp\\A Quiet Place Part II (2021)\\A Quiet Place Part II (2020).mp4"
 #     test_path = '"A Quiet Place Part II (2020)"'
 #     download_subtitles_for_single_media(test_path)
