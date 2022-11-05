@@ -3,6 +3,8 @@ from sms.logger import txt_logger
 from pathlib import Path
 import subprocess
 
+import media_fsu
+
 SUBTITLE_AD_L = [
                     '-== [ www.OpenSubtitles.com ] ==-',
                     '== sync, corrected by elderman ==',
@@ -83,20 +85,7 @@ def remove_ads_from_all_nested_srt_files_in_dir(dir_path):
         if fsu.get_basename_from_path(file_path).endswith('.srt'):
 #             print(file_path)
             remove_ads_from_srt_file(file_path)
-     
-
-def get_nested_media_file_path_l(in_dir_path): 
-    ''' Returns list of abs path strings to every .mp4, .mkv, and .avi file under in_dir_path recursively'''
-    pattern_l = ('*.mp4', '*.mkv', "*.avi") # the tuple of file types
-    
-    media_file_path_l = []
-        
-    for pattern in pattern_l:
-        pattern_media_file_path_str_l = list(path_obj.__str__() for path_obj in Path(in_dir_path).rglob(pattern))
-        media_file_path_l.extend(pattern_media_file_path_str_l)
-
-    return(media_file_path_l) 
-          
+             
           
 # Added OpenSubtitles creds with: filebot -script fn:configure
 def download_subtitles_for_single_media(media_file_path):
@@ -110,7 +99,7 @@ def download_subtitles_for_single_media(media_file_path):
     
 def download_subtitles_for_all_media_files_in_nested_dirs(in_dir_path):
     '''Downloads subtitle file(s) next to each media file, so all media files should be in their own dir before running this'''
-    media_file_path_l = get_nested_media_file_path_l(in_dir_path)
+    media_file_path_l = media_fsu.get_media_file_path_l(in_dir_path = in_dir_path, recursive = True)
     
     for media_file_path in media_file_path_l:
         print("Downloading subtitles for {}...".format(media_file_path))
@@ -118,6 +107,7 @@ def download_subtitles_for_all_media_files_in_nested_dirs(in_dir_path):
 
 
 if __name__ == "__main__":
+    print('in main')
 #     dir_path = "C:\\Users\\Brandon\\Documents\\Other\\temp\\test_dir\\Coming 2 America (2021) [Unknown]"
 #     dir_path = "C:\\Users\\Brandon\\Documents\\Other\\temp\\test_dir"
 #     recursive = True
@@ -136,6 +126,8 @@ if __name__ == "__main__":
 #     test_path = '"A Quiet Place Part II (2020)"'
 #     download_subtitles_for_single_media(test_path)
     download_subtitles_for_all_media_files_in_nested_dirs(test_path)
+    
+    print('end of main')
     
     
     
