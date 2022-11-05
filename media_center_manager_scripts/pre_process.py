@@ -8,6 +8,8 @@
 # os.chdir(SCRIPT_PARENT_DIR)
 import subtile_utils
 
+from put_stand_alone_media_files_in_dirs import put_stand_alone_media_files_in_dirs
+
 
 if __name__ == '__main__':
     try:
@@ -26,6 +28,8 @@ if __name__ == '__main__':
         print('Deleting metadata from .mp4 files...')
         delete_metadata_from_mp4_files_in_nested_dirs.delete_all_metadata_from_all_mp4_in_movie_dirs(COMPLETED_DIR_PATH)
         
+        print('Putting any stand-alone media files in their own directory...')
+        put_stand_alone_media_files_in_dirs(COMPLETED_DIR_PATH)
         
         input('Pre-Process Complete, Now Run Media Center Master, Press enter to close.')
     except BaseException:
