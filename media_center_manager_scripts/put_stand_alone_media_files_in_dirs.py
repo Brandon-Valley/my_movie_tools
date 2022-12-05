@@ -19,6 +19,8 @@ def put_stand_alone_media_files_in_dirs(in_dir_path):
         print("Copying {} to {}...".format(stand_alone_media_file_path, new_media_file_path))
         fsu.copy_object_to_path(stand_alone_media_file_path, new_media_file_path)
         
+        print("  Deleting original stand-alone file: {}...".format(stand_alone_media_file_path))
+        fsu.delete_if_exists(stand_alone_media_file_path)
     
     
 
