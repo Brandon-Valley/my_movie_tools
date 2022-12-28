@@ -3,7 +3,7 @@ from pathlib import Path
 
 def get_media_file_path_l(in_dir_path, recursive): 
     ''' Returns list of abs path strings to every .mp4, .mkv, and .avi file under in_dir_path recursively'''
-    pattern_l = ('*.mp4', '*.mkv', "*.avi") # the tuple of file types
+    pattern_l = ('*.mp4', '*.mkv', "*.avi", "*.webm", "*.m4v") # the tuple of file types
     
     media_file_path_l = []
         
