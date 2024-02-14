@@ -1,7 +1,8 @@
 
 
+from pathlib import Path
 from sms.file_system_utils import file_system_utils as fsu
-from sms.subprocess_utils import subprocess_utils as su
+# from sms.subprocess_utils import subprocess_utils as su
 
 
 import os
@@ -36,14 +37,21 @@ def delete_all_metadata_from_all_mp4_in_dir(in_dir_path):
     for abs_path in abs_path_l:
         if fsu.get_extention(abs_path) == '.mp4':
             
-            temp_no_metadata_file_abs_path = PWD + '//temp.mp4'           
+            temp_no_metadata_file_abs_path = os.path.join(PWD, '//temp.mp4')
             
             # delete temp file from previous test if exists
             fsu.delete_if_exists(temp_no_metadata_file_abs_path)
+
+            Path(temp_no_metadata_file_abs_path).parent.mkdir(parents=True, exist_ok=True)
             
             # make temp file with deleted metadata
             cmd = 'ffmpeg -i "{}" -map_metadata "-1" -c:v copy -c:a copy "{}"'.format(abs_path, temp_no_metadata_file_abs_path)
-            su.run_cmd_popen(cmd, print_output = False, print_cmd = True)#, shell = False, decode = False, strip = False, always_output_list = False, return_stderr = True)
+            print("Running {}...".format(cmd))
+            with subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=1) as proc_obj:
+                for line in proc_obj.stdout:
+                    stripped_line = line.rstrip('\n')
+                    print('[CMD] {}'.format(stripped_line))
+            # su.run_cmd_popen(cmd, print_output = False, print_cmd = True)#, shell = False, decode = False, strip = False, always_output_list = False, return_stderr = True)
 #             subprocess.call(cmd, shell = True)
             
             # delete og file

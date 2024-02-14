@@ -25,7 +25,8 @@ import time
 
 
 # VID_FILE_PATH = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\dolbycanyon_outside.mkv"
-VID_FILE_PATH = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\transfer_dir\\Atonement_(720).m4v"
+# VID_FILE_PATH = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\transfer_dir\\Atonement_(720).m4v"
+VID_FILE_PATH = "C:/tmp/S10E05__Family_Guy__Back_To_The_Pilot__Clip____TBS.mkv"
 # VID_FILE_PATH = "C:\\Users\\Brandon\\Documents\\Personal_Projects\\my_movie_tools_big_data\\Screen.mkv"
 
 FULL_AUDIO_PATH   = '..\\my_movie_tools_big_data\\full_audio.wav'

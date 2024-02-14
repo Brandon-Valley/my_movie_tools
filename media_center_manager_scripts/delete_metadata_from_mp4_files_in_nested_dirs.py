@@ -1,6 +1,7 @@
 
 from sms.file_system_utils import file_system_utils as fsu
-from sms.subprocess_utils  import subprocess_utils  as su
+# from sms.subprocess_utils  import subprocess_utils  as su
+import subprocess
 
 import os
 import time
@@ -21,7 +22,9 @@ def delete_all_metadata_from_all_mp4_in_dir(in_dir_path):
             
             # make temp file with deleted metadata
             cmd = 'ffmpeg -i "{}" -map_metadata "-1" -c:v copy -c:a copy "{}"'.format(abs_path, temp_no_metadata_file_abs_path)
-            su.run_cmd_popen(cmd, print_output = False, print_cmd = True)#, shell = False, decode = False, strip = False, always_output_list = False, return_stderr = True)
+            print("Running {}...".format(cmd))
+            subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=1)
+            # su.run_cmd_popen(cmd, print_output = False, print_cmd = True)#, shell = False, decode = False, strip = False, always_output_list = False, return_stderr = True)
 #             subprocess.call(cmd, shell = True)
             
             # delete og file
