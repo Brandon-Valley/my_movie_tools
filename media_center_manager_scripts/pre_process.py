@@ -6,6 +6,7 @@
 # SCRIPT_PARENT_DIR = os.path.abspath(__file__)
 # 
 # os.chdir(SCRIPT_PARENT_DIR)
+from pathlib import Path
 import subtile_utils
 
 from put_stand_alone_media_files_in_dirs import put_stand_alone_media_files_in_dirs
@@ -19,7 +20,7 @@ if __name__ == '__main__':
         
         import delete_metadata_from_mp4_files_in_nested_dirs
          
-        COMPLETED_DIR_PATH = 'C:\\vuze_downloads\\completed' 
+        COMPLETED_DIR_PATH = Path('C:\\vuze_downloads\\completed').as_posix()
 #         COMPLETED_DIR_PATH = "D:\\working"
 #         COMPLETED_DIR_PATH = "D:\\test"
          
