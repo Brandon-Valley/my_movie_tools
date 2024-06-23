@@ -14,7 +14,7 @@ def delete_if_exists(file_path):
         os.remove(file_path)
 
 def get_media_file_path_l(in_dir_path, recursive=False):
-    media_extensions = ['.mp4', '.mkv', '.avi', '.mov']
+    media_extensions = ['.mp4', '.mkv', '.avi', '.mov', '.m4v']
     media_files = []
     for root, dirs, files in os.walk(in_dir_path):
         for file in files:
