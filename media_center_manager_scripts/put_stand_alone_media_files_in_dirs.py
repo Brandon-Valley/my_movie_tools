@@ -44,9 +44,14 @@ def put_stand_alone_media_files_in_dirs(in_dir_path):
                 copy_object_to_path(stand_alone_media_file_path, new_media_file_path)
                 print(f"  Deleting original stand-alone file: {stand_alone_media_file_path}...")
                 delete_if_exists(stand_alone_media_file_path)
+                print("    Success!")
             except FileNotFoundError as e:
                 print(f"Error: {e}")
+                delete_if_exists(new_dir_path)
                 print(f"Failed to copy from {stand_alone_media_file_path} to {new_media_file_path}")
+                raise Exception (
+                    f"Failed to copy from {stand_alone_media_file_path} to {new_media_file_path}, this is probably "
+                    "b/c the original file name is too long, please rename and retry")
         else:
             print(f"File does not exist: {stand_alone_media_file_path}")
 
